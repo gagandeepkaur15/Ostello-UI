@@ -7,6 +7,7 @@ class GoalCard extends StatelessWidget {
   final String classes;
   final String image;
   final bool isBorder;
+  final String heroTag;
 
   const GoalCard({
     super.key,
@@ -14,38 +15,42 @@ class GoalCard extends StatelessWidget {
     required this.classes,
     required this.image,
     required this.isBorder,
+    required this.heroTag,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 1,
-      color: context.theme.scaffoldBackgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-        side: isBorder
-            ? const BorderSide(color: Color(0xFFAC68F8), width: 1)
-            : BorderSide.none,
-      ),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: AppColors.purple10,
-          child: Image.asset(image),
+    return Hero(
+      tag: heroTag,
+      child: Card(
+        elevation: 1,
+        color: context.theme.scaffoldBackgroundColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: isBorder
+              ? const BorderSide(color: Color(0xFFAC68F8), width: 1)
+              : BorderSide.none,
         ),
-        title: Text(
-          goalTitle,
-          style: context.theme.textTheme.bodySmall!.copyWith(
-            fontWeight: FontWeight.w800,
+        child: ListTile(
+          leading: CircleAvatar(
+            backgroundColor: AppColors.purple10,
+            child: Image.asset(image),
           ),
+          title: Text(
+            goalTitle,
+            style: context.theme.textTheme.bodySmall!.copyWith(
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          subtitle: Text(
+            classes,
+            style: context.theme.textTheme.bodySmall!
+                .copyWith(color: AppColors.greyText),
+          ),
+          trailing: isBorder
+              ? Radio(value: '', groupValue: '', onChanged: (_) {})
+              : const SizedBox.shrink(),
         ),
-        subtitle: Text(
-          classes,
-          style: context.theme.textTheme.bodySmall!
-              .copyWith(color: AppColors.greyText),
-        ),
-        trailing: isBorder
-            ? Radio(value: '', groupValue: '', onChanged: (_) {})
-            : const SizedBox.shrink(),
       ),
     );
   }
@@ -74,6 +79,7 @@ class GoalList extends StatelessWidget {
             classes: goals[index]['classes'],
             image: goals[index]['image'],
             isBorder: false,
+            heroTag: 'goal_card_$index',
           ),
         );
       },

@@ -44,6 +44,7 @@ class ClassSelectionScreen extends StatelessWidget {
                   classes: goalsList[goalIndex]['classes'],
                   image: goalsList[goalIndex]['image'],
                   isBorder: true,
+                   heroTag: 'goal_card_$goalIndex', 
                 ),
                 const SizedBox(height: 20),
                 Text(
